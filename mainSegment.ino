@@ -5,24 +5,15 @@
 #define  DIO_TM 7
 
 float seconds = 0;
-bool canClick = true;
-int password[] = {0, 0, 0, 0, 0, 0, 0, 0};
-int arrayIndexPosition = 0;
-int savePassword[8];
-bool active = false;
-
 bool explodeState = false;
 
 Password passwordInitial;
 Password passwordSave;
 
-
-
 TM1638plus tm(STROBE_TM, CLOCK_TM , DIO_TM, false);
 
 void setup() {
     tm.displayBegin();
-    //tm.displayText("hello world");
 }
 
 void loop() {   
@@ -103,7 +94,6 @@ void deactivate() {
         passwordSave.setDefaultValues();
         return;
     }
-    active = false;
     tm.displayText("Deactivated");
     delay(3000);
     reset();
