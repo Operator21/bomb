@@ -1,11 +1,14 @@
+
 #include <TM1638plus.h>
 
 #define  STROBE_TM 4
 #define  CLOCK_TM 6
 #define  DIO_TM 7
+#define BUZZER 3
 
 float seconds = 0;
 bool explodeState = false;
+int countdown = 0;
 
 Password passwordInitial;
 Password passwordSave;
@@ -22,12 +25,13 @@ void loop() {
         case 1: increaseTime(100); break;
         case 2: decreaseTime(100); break;
         case 4: 
-            if(passwordInitial.checkPasswordSet()) {
+            if(passwordInitial.checkPasswordSet() && !explodeState) {
                 resetLeds();
                 explodeState = true; 
-            }
+                delay(1000);
+            } else if(explodeState) deactivate();
             break;
-        case 8: deactivate(); break;
+        case 8: 
         case 16:
         case 32:
         case 64:
@@ -38,17 +42,30 @@ void loop() {
                 passwordSave.setCurrentArrayIndexValue(buttons);
             }
             break;
+        case 192:
+            if(!explodeState) {
+                reset();
+                delay(500);
+            }
+            break;
     }
     if(explodeState) {
+        noTone(BUZZER);
         delay(50);
         seconds -= 0.05f;
+        if(countdown == 20){
+            countdown = 0;
+            tone(BUZZER, 10000);
+            tm.reset();
+        }
         if(seconds < 0.1) {
             explode();
         }
+        countdown++;
         passwordSave.displayPasswordSize(tm);
     } else {
         passwordInitial.displayPasswordSize(tm);
-    }
+    }  
     tm.displayIntNum(seconds, false);
 }
 
@@ -66,9 +83,10 @@ void decreaseTime(int time) {
     }
 }
 void explode() {
-    tm.displayText("BOOOOMMMM");
+    tm.displayText("BOOOONNNNN");
+    explosionSound();
     delay(3000);
-    explodeState = false;
+    reset();
     tm.reset();
 }
 
@@ -77,6 +95,7 @@ void reset() {
     passwordSave.setDefaultValues();
     explodeState = false;
     seconds = 0;
+    countdown = 0;
     resetLeds();
     tm.reset();
 }
@@ -90,11 +109,37 @@ void resetLeds() {
 
 void deactivate() {
     if(!passwordInitial.compareWith(passwordSave)){
+        seconds -= 5;
         resetLeds();
         passwordSave.setDefaultValues();
         return;
     }
-    tm.displayText("Deactivated");
+    tm.displayText("-------------");
+    playDoom();
     delay(3000);
     reset();
 }
+
+void explosionSound() {
+    int delayMulitplier = 2; 
+    for(int x = 0; x < 300; x++) {
+        tone(BUZZER, random(500, 1000), random(1, 5));
+        digitalWrite(BUZZER, HIGH);
+        delay(1);
+        //delay(random(1 * 10, 5 * 10));
+    }
+    
+}
+//E D C D
+/*void end() {
+    int length = 500;
+    int song[] = {NOTE_G7, NOTE_E6, NOTE_D7, NOTE_C7, NOTE_G7, NOTE_G7, NOTE_E6, NOTE_D7, NOTE_C7, NOTE_G7};
+    playNotes(song, 500);
+}
+
+void playNotes(int note[], int length) {
+    for(int x = 0; x < sizeof(note) - 1; x++) {
+        tone(BUZZER, note[x], length);
+        delay(length);
+    }
+}*/
