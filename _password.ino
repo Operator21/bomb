@@ -6,7 +6,6 @@ class Password {
 
     public:
         Password();
-        void setSavePassword();
         void displayPasswordSize(TM1638plus tm);
         void setDefaultValues();
         bool checkPasswordSet();
@@ -17,12 +16,6 @@ class Password {
 
 Password::Password() {
     setDefaultValues();
-}
-
-void Password::setSavePassword() {
-    for(int x = 0; x < 8; x++) {
-        setCurrentArrayIndexValue(16);
-    }
 }
 
 void Password::displayPasswordSize(TM1638plus tm) {

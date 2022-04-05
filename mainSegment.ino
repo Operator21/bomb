@@ -88,6 +88,7 @@ void decreaseTime(int time, int value) {
 void explode() {
     seconds = 0;
     explosionSound();
+    noTone(BUZZER);
     for(int x = 0; x < 10; x++){
         tm.displayText("------------");
         delay(100);
@@ -132,14 +133,10 @@ void deactivate() {
 }
 
 void explosionSound() {
-    int delayMulitplier = 2; 
     for(int x = 0; x < 300; x++) {
         tone(BUZZER, random(500, 1000), random(1, 5));
-        //digitalWrite(BUZZER, HIGH);
         delay(1);
-        //delay(random(1 * 10, 5 * 10));
     }
-    noTone(BUZZER);
 }
 
 void inputCodeError() {
