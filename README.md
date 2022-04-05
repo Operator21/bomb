@@ -19,7 +19,7 @@ Zapojení pinů modulu je následující:
 Zapojení reproduktoru:
 
 - Plus - pin 3
-- Mínus - rezistor 330 Ω -\&gt; GND
+- Mínus - rezistor 330 Ω -> GND
 
 ##
 
