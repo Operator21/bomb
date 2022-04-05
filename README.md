@@ -28,8 +28,9 @@ Zapojení reproduktoru:
 
 ## V režimu vstupu
 
-| S1 | Přidá 1 vteřinu |
+| Tlačítko | Operace |
 | --- | --- |
+| S1 | Přidá 1 vteřinu |
 | S1 + S4 | Přidá 10 vteřin |
 | S2 | Odebere 1 vteřinu |
 | S2 + S4 | Odebere 10 vteřin |
@@ -39,8 +40,9 @@ Zapojení reproduktoru:
 
 ## V režimu odpočtu
 
-| S1 | x |
+| Tlačítko | Operace |
 | --- | --- |
+| S1 | x |
 | S2 | x |
 | S3 | Potvrzení pokusu o deaktivaci |
 | S4 až S8 | Uložení tlačítka do deaktivační kombinace |
