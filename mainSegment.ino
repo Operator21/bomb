@@ -22,8 +22,8 @@ void setup() {
 void loop() {   
     uint8_t buttons = tm.readButtons();
     switch(buttons) {
-        case 1: increaseTime(100); break;
-        case 2: decreaseTime(100); break;
+        case 1: increaseTime(100, 1); break;
+        case 2: decreaseTime(100, 1); break;
         case 4: 
             if(passwordInitial.checkPasswordSet() && !explodeState) {
                 resetLeds();
@@ -31,6 +31,8 @@ void loop() {
                 delay(1000);
             } else if(explodeState) deactivate();
             break;
+        case 9: increaseTime(100, 10); break;
+        case 10: decreaseTime(100, 10); break;
         case 8: 
         case 16:
         case 32:
@@ -69,15 +71,15 @@ void loop() {
     tm.displayIntNum(seconds, false);
 }
 
-void increaseTime(int time) {
-    seconds++;
+void increaseTime(int time, int value) {
+    seconds += value;
     delay(time);
     tm.reset();
 }
 
-void decreaseTime(int time) {
-    if(seconds > 0) {
-        seconds--;
+void decreaseTime(int time, int value) {
+    if(seconds - value >= 0) {
+        seconds -= value;
         delay(time);
         tm.reset();
     }
@@ -129,7 +131,6 @@ void explosionSound() {
         delay(1);
         //delay(random(1 * 10, 5 * 10));
     }
-    
 }
 //E D C D
 /*void end() {
