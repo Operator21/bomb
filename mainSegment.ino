@@ -22,17 +22,18 @@ void setup() {
 void loop() {   
     uint8_t buttons = tm.readButtons();
     switch(buttons) {
-        case 1: increaseTime(100, 1); break;
-        case 2: decreaseTime(100, 1); break;
+        case 1: if(!explodeState) increaseTime(100, 1); break;
+        case 2: if(!explodeState) decreaseTime(100, 1); break;
         case 4: 
             if(passwordInitial.checkPasswordSet() && !explodeState) {
                 resetLeds();
                 explodeState = true; 
                 delay(1000);
             } else if(explodeState) deactivate();
+            else inputCodeError();
             break;
-        case 9: increaseTime(100, 10); break;
-        case 10: decreaseTime(100, 10); break;
+        case 9: if(!explodeState) increaseTime(100, 10); break;
+        case 10: if(!explodeState) decreaseTime(100, 10); break;
         case 8: 
         case 16:
         case 32:
@@ -85,9 +86,16 @@ void decreaseTime(int time, int value) {
     }
 }
 void explode() {
-    tm.displayText("BOOOONNNNN");
+    seconds = 0;
     explosionSound();
-    delay(3000);
+    for(int x = 0; x < 10; x++){
+        tm.displayText("------------");
+        delay(100);
+        tm.reset();
+        tm.displayText("            ");
+        delay(100);
+    }
+    delay(1000);
     reset();
     tm.reset();
 }
@@ -111,15 +119,15 @@ void resetLeds() {
 
 void deactivate() {
     if(!passwordInitial.compareWith(passwordSave)){
-        seconds -= 5;
+        decreaseTime(0, 5);
         resetLeds();
         passwordSave.setDefaultValues();
         delay(200);
         return;
     }
-    tm.displayText("-------------");
+    tm.displayText("SUCCESS");
     playDoom();
-    delay(3000);
+    delay(1000);
     reset();
 }
 
@@ -127,21 +135,16 @@ void explosionSound() {
     int delayMulitplier = 2; 
     for(int x = 0; x < 300; x++) {
         tone(BUZZER, random(500, 1000), random(1, 5));
-        digitalWrite(BUZZER, HIGH);
+        //digitalWrite(BUZZER, HIGH);
         delay(1);
         //delay(random(1 * 10, 5 * 10));
     }
-}
-//E D C D
-/*void end() {
-    int length = 500;
-    int song[] = {NOTE_G7, NOTE_E6, NOTE_D7, NOTE_C7, NOTE_G7, NOTE_G7, NOTE_E6, NOTE_D7, NOTE_C7, NOTE_G7};
-    playNotes(song, 500);
+    noTone(BUZZER);
 }
 
-void playNotes(int note[], int length) {
-    for(int x = 0; x < sizeof(note) - 1; x++) {
-        tone(BUZZER, note[x], length);
-        delay(length);
-    }
-}*/
+void inputCodeError() {
+    tm.displayText("CODE");
+    tone(BUZZER, 10000, 200);
+    delay(1000);
+    tm.reset();
+}
