@@ -112,6 +112,7 @@ void deactivate() {
         seconds -= 5;
         resetLeds();
         passwordSave.setDefaultValues();
+        delay(200);
         return;
     }
     tm.displayText("-------------");
