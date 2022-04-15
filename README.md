@@ -1,8 +1,8 @@
 # Bomba
-
 ## Cíl práce
 
-Cílem práce je vytvořit propojení arduina s komponenty simulující výbušné zařízení typické pro dramatické filmy. Zařízení poskytuje rozhraní (tlačítka) pro nastavení času ve vteřinách, takto nastavený čas se zobrazuje na 7-segmentovém displeji. Další zásadní součástí je nastavení osmi místného hesla tvořeného kombinací 5 dalších tlačítek, toto heslo je vyžadováno pro spuštění &quot;výbušného procesu&quot;. Během každého stisku tlačítka je při tvorbě hesla rozsvícena ledka s danou pozicí pro jednodušší zapamatování kombinace. Po spuštění procesu se odpočítavají vteřiny až k nule, při dosažení nuly zařízení pípne a displej zobrazí text symbolizující výbuch. Před dosažením nuly je možné odpočet zrušit pomocí kombinace zadané při aktivaci, po zadání špatné kombinace je čas odpočtu snížen aby se zabránilo technice brute-force.
+Cílem práce je vytvořit propojení arduina s komponenty simulující výbušné zařízení typické pro dramatické filmy. Zařízení poskytuje rozhraní (tlačítka) pro nastavení času ve vteřinách, takto nastavený čas se zobrazuje na 7-segmentovém displeji. Další zásadní součástí je nastavení osmi místného hesla tvořeného kombinací 5 dalších tlačítek, toto heslo je vyžadováno pro spuštění &quot;výbušného procesu&quot;. Během každého stisku tlačítka je při tvorbě hesla rozsvícena ledka s danou pozicí pro jednodušší zapamatování kombinace. Po spuštění procesu se odpočítávají vteřiny až k nule, při dosažení nuly zařízení pípne a displej zobrazí text symbolizující výbuch. Před dosažením nuly je možné odpočet zrušit pomocí kombinace zadané při aktivaci, po zadání špatné kombinace je čas odpočtu snížen aby se zabránilo technice brute-force.
+
 
 ## Hardwarové zapojení
 
@@ -21,16 +21,13 @@ Zapojení reproduktoru:
 - Plus - pin 3
 - Mínus - rezistor 330 Ω -> GND
 
-##
-
 
 ## Ovládání bomby
 
 ## V režimu vstupu
 
-| Tlačítko | Operace |
-| --- | --- |
 | S1 | Přidá 1 vteřinu |
+| --- | --- |
 | S1 + S4 | Přidá 10 vteřin |
 | S2 | Odebere 1 vteřinu |
 | S2 + S4 | Odebere 10 vteřin |
@@ -40,9 +37,8 @@ Zapojení reproduktoru:
 
 ## V režimu odpočtu
 
-| Tlačítko | Operace |
-| --- | --- |
 | S1 | x |
+| --- | --- |
 | S2 | x |
 | S3 | Potvrzení pokusu o deaktivaci |
 | S4 až S8 | Uložení tlačítka do deaktivační kombinace |
@@ -141,8 +137,6 @@ Přijímá jako parametr další instanci třídy Password a v cyklu porovnává
 
 Mezi největší problémy tohoto projektu se určitě řadila nemožnost asynchronního programování, čtení vstupu se zobrazováním odpočtu ve stejnou chvíli se tak stalo výraznou obtíží. Řešení se snížením časových prodlev a následného dopočítávání uběhlých vteřin se ukázalo jako optimální i přestože vedlo k mírným odchylkám v delších odpočtech.
 
-Práce s rozšiřujícím modulem a knihovnou TM1638plus výrazně snížila množství potřebných komponent pro stavbu tohoto zapojení. Bzučák se ukázal jako dostačující pro základní pípání v odpočtu, pro efekty výbuchu už bohužel ne.
+Práce s rozšiřujícím modulem a knihovnou TM1638plus výrazně snížila množství potřebných komponent pro stavbu tohoto zapojení. Bzučák se ukázal jako dostačující pro základní pípání v odpočtu, pro efekty výbuchu už bohužel ne. I přestože 7 segmentový displej byl pro tuto simulaci ideální, měl svoje úskalí, především v práci s textem.
 
-I přestože 7 segmentový displej byl pro tuto simulaci ideální, měl svoje úskalí, především v práci s textem.
-
-Celkově práce dosáhla svých stanovených cílů, uživatel může nastavovat čas a s pomocí kombinace spustit či deaktivovat odpočet, po uplynutí odpočtu je uživateli ohlášen výbuch.
+Celkově práce dosáhla svých stanovených cílů, uživatel může nastavovat čas a s pomocí kombinace spustit či deaktivovat odpočet, po uplynutí odpočtu je uživateli ohlášen výbuch. Při úspěšné deaktivaci je písničkou ohlášeno vítězství a bomba se vrací do původního stavu.
