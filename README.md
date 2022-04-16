@@ -1,4 +1,5 @@
 # Bomba
+[Youtube video prezentace](https://youtu.be/aIvJkMaMzTM)
 ## Cíl práce
 
 Cílem práce je vytvořit propojení arduina s komponenty simulující výbušné zařízení typické pro dramatické filmy. Zařízení poskytuje rozhraní (tlačítka) pro nastavení času ve vteřinách, takto nastavený čas se zobrazuje na 7-segmentovém displeji. Další zásadní součástí je nastavení osmi místného hesla tvořeného kombinací 5 dalších tlačítek, toto heslo je vyžadováno pro spuštění &quot;výbušného procesu&quot;. Během každého stisku tlačítka je při tvorbě hesla rozsvícena ledka s danou pozicí pro jednodušší zapamatování kombinace. Po spuštění procesu se odpočítávají vteřiny až k nule, při dosažení nuly zařízení pípne a displej zobrazí text symbolizující výbuch. Před dosažením nuly je možné odpočet zrušit pomocí kombinace zadané při aktivaci, po zadání špatné kombinace je čas odpočtu snížen aby se zabránilo technice brute-force.
